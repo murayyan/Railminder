@@ -42,8 +42,6 @@ jobs:
         run: |
           xcodebuild -version
           xcode-select -p
-          flutter --version
-          flutter doctor -v || true
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
@@ -51,6 +49,11 @@ jobs:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: stable
           cache: true
+
+      - name: Flutter doctor
+        run: |
+          flutter --version
+          flutter doctor -v || true
 
       - name: Resolve packages
         run: flutter pub get
