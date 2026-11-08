@@ -79,6 +79,17 @@ Konfigurasi berikut wajib ada di `android/app/build.gradle.kts`, kalau tidak bui
 
 Paket `sqlite3` (dependensi test lewat `sqflite_common_ffi`) mengunduh pustaka native dari GitHub Release saat build pertama. Bila unduhan itu gagal (mis. `504` dari GitHub), unduh manual aset `libsqlite3.<abi>.android.so` dari rilis `sqlite3-3.5.2`, ganti nama jadi `libsqlite3.so`, lalu letakkan di `.dart_tool/hooks_runner/shared/sqlite3/build/download-<8 karakter awal sha256>/`.
 
+### Build IPA iOS (GitHub Actions)
+
+Karena kompilasi iOS membutuhkan macOS + Xcode penuh, proyek menyediakan workflow otomatis `.github/workflows/build-ios.yml` yang berjalan di runner `macos-latest`:
+
+1. Push ke cabang `001-krl-station-reminder` atau jalankan via tombol **Run workflow** di tab **Actions**.
+2. Workflow mengecek kode, menjalankan test (51/51), mengompilasi rilis iOS tanpa tanda tangan, dan mengemas `Payload/Runner.app` ke format `.ipa`.
+3. File `.ipa` dan checksum `.sha256` diunggah ke bagian **Artifacts** (disimpan 30 hari).
+4. Pasang ke iPhone lewat AltStore, Sideloadly, atau TrollStore.
+
+IPA ini **tanpa tanda tangan**, jadi tidak bisa dibuka lewat Finder atau AirDrop langsung. iPhone biasa harus menandatangani ulang pakai Apple ID Anda (AltStore/Sideloadly). Untuk TestFlight atau App Store perlu Apple Developer berbayar, sertifikat `.p12`, dan provisioning profile.
+
 ## Test
 
 ```bash

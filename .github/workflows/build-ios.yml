@@ -1,0 +1,127 @@
+name: Build iOS IPA
+
+on:
+  workflow_dispatch:
+    inputs:
+      flutter_version:
+        description: Versi Flutter yang dipakai
+        required: false
+        default: 3.47.9
+  push:
+    branches:
+      - main
+      - 001-krl-station-reminder
+    paths:
+      - lib/**
+      - ios/**
+      - assets/**
+      - pubspec.yaml
+      - pubspec.lock
+      - .github/workflows/build-ios.yml
+
+concurrency:
+  group: ios-ipa-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build-unsigned-ipa:
+    name: Unsigned IPA (sideload)
+    runs-on: macos-latest
+    timeout-minutes: 45
+    env:
+      FLUTTER_VERSION: ${{ inputs.flutter_version || '3.47.9' }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Toolchain info
+        run: |
+          xcodebuild -version
+          xcode-select -p
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+
+      - name: Resolve packages
+        run: flutter pub get
+
+      - name: Precache iOS artifacts
+        run: flutter precache --ios
+
+      - name: Analyze
+        run: flutter analyze
+
+      - name: Unit and widget tests
+        run: flutter test
+
+      - name: Build iOS app without code signing
+        run: flutter build ios --release --no-codesign
+
+      - name: Package IPA
+        id: package
+        run: |
+          set -euo pipefail
+          APP_PATH="build/ios/iphoneos/Runner.app"
+          if [ ! -d "$APP_PATH" ]; then
+            echo "Runner.app tidak ditemukan di $APP_PATH" >&2
+            exit 1
+          fi
+
+          VERSION=$(/usr/libexec/PlistBuddy -c "Print :CFBundleShortVersionString" "$APP_PATH/Info.plist")
+          BUILD=$(/usr/libexec/PlistBuddy -c "Print :CFBundleVersion" "$APP_PATH/Info.plist")
+          IPA_NAME="railminder-${VERSION}-${BUILD}-unsigned.ipa"
+
+          rm -rf build/Payload
+          mkdir -p build/Payload
+          cp -R "$APP_PATH" build/Payload/Runner.app
+          (
+            cd build
+            /usr/bin/zip -qry "$IPA_NAME" Payload
+          )
+
+          ls -lh "build/$IPA_NAME"
+          /usr/bin/shasum -a 256 "build/$IPA_NAME" | tee "build/$IPA_NAME.sha256"
+
+          echo "ipa_name=$IPA_NAME" >> "$GITHUB_OUTPUT"
+          echo "ipa_version=$VERSION+$BUILD" >> "$GITHUB_OUTPUT"
+
+      - name: Validate IPA contents
+        run: |
+          set -euo pipefail
+          unzip -l "build/${{ steps.package.outputs.ipa_name }}" | grep -E "Payload/Runner.app/Runner$" \
+            || { echo "Binary Runner hilang dari IPA" >&2; exit 1; }
+          unzip -l "build/${{ steps.package.outputs.ipa_name }}" | grep -E "Payload/Runner.app/Info.plist" \
+            || { echo "Info.plist hilang dari IPA" >&2; exit 1; }
+
+      - name: Upload IPA
+        uses: actions/upload-artifact@v4
+        with:
+          name: railminder-ipa-${{ steps.package.outputs.ipa_version }}
+          path: |
+            build/${{ steps.package.outputs.ipa_name }}
+            build/${{ steps.package.outputs.ipa_name }}.sha256
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Summary
+        run: |
+          {
+            echo "### IPA siap diunduh"
+            echo ""
+            echo "| Item | Nilai |"
+            echo "|------|-------|"
+            echo "| File | \`${{ steps.package.outputs.ipa_name }}\` |"
+            echo "| Versi | \`${{ steps.package.outputs.ipa_version }}\` |"
+            echo "| Ukuran | $(du -h "build/${{ steps.package.outputs.ipa_name }}" | cut -f1) |"
+            echo "| Signature | Unsigned (perlu re-sign) |"
+            echo ""
+            echo "Unduh dari tab **Artifacts** pada halaman run ini, lalu pasang lewat AltStore, Sideloadly, atau TrollStore."
+          } >> "$GITHUB_STEP_SUMMARY"
