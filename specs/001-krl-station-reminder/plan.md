@@ -1,113 +1,132 @@
-# Implementation Plan: [FEATURE]
+# Implementation Plan: Pengingat Stasiun Tujuan KRL
 
-**Branch**: `[###-feature-name]` | **Date**: [DATE] | **Spec**: [link]
+**Branch**: `001-krl-station-reminder` | **Date**: 2026-11-08 | **Spec**: [spec.md](./spec.md)
 
-**Input**: Feature specification from `/specs/[###-feature-name]/spec.md`
-
-**Note**: This template is filled in by the `/speckit.plan` command; its definition describes the execution workflow.
+**Input**: Feature specification from `/specs/001-krl-station-reminder/spec.md`
 
 ## Summary
 
-[Extract from feature spec: primary requirement + technical approach from research]
+Aplikasi mobile Flutter (Android + iOS) yang memantau posisi GPS pengguna selama perjalanan KRL dan mengirim notifikasi + getar ketika kereta mendekati stasiun tujuan. Deteksi berbasis perhitungan jarak ke koordinat stasiun yang dibundel offline, dijalankan oleh location stream di dalam foreground service (Android) / background location mode (iOS). Seluruh data perjalanan dan daftar stasiun tersimpan di perangkat; tidak ada backend, akun, atau ketergantungan API operator.
 
 ## Technical Context
 
-<!--
-  ACTION REQUIRED: Replace the content in this section with the technical details
-  for the project. The structure here is presented in advisory capacity to guide
-  the iteration process.
--->
+**Language/Version**: Dart 3.5+ / Flutter 3.24+ (stable channel)
 
-**Language/Version**: [e.g., Python 3.11, Swift 5.9, Rust 1.75 or NEEDS CLARIFICATION]
+**Primary Dependencies**: `flutter_riverpod` (state), `geolocator` 14.x (location stream + foreground service config), `flutter_local_notifications` (notification channel, actions, vibration), `shared_preferences` (active journey + settings), `sqflite` (journey history), `permission_handler` (permission prompts & settings deep-link), `intl` (date formatting). Versi minor dikunci saat `flutter pub add` di fase implementasi.
 
-**Primary Dependencies**: [e.g., FastAPI, UIKit, LLVM or NEEDS CLARIFICATION]
+**Storage**: Local-only — `shared_preferences` untuk state perjalanan aktif dan preferensi; `sqflite` untuk riwayat perjalanan; aset JSON `assets/data/krl_stations.json` untuk daftar stasiun. Tidak ada database server.
 
-**Storage**: [if applicable, e.g., PostgreSQL, CoreData, files or N/A]
+**Testing**: `flutter_test` (unit + widget), `integration_test` untuk alur end-to-end, dan simulasi location stream melalui `TestLocationSource` (fake stream) agar logika alert deterministik. GPX track untuk uji di emulator/simulator.
 
-**Testing**: [e.g., pytest, XCTest, cargo test or NEEDS CLARIFICATION]
+**Target Platform**: Android 10+ (API 29) dengan target SDK 35 dan deklarasi foreground service type `location`; iOS 16+ dengan `UIBackgroundModes: location`.
 
-**Target Platform**: [e.g., Linux server, iOS 15+, WASM or NEEDS CLARIFICATION]
+**Project Type**: mobile-app (single Flutter application, tanpa backend)
 
-**Project Type**: [e.g., library/cli/web-service/mobile-app/compiler/desktop-app or NEEDS CLARIFICATION]
+**Performance Goals**: Konsumsi baterai ≤5% per jam pemantauan; notifikasi terkirim ≤10 detik setelah ambang terlewati; cold start <2 detik; pemrosesan sampel lokasi <5 ms per event.
 
-**Performance Goals**: [domain-specific, e.g., 1000 req/s, 10k lines/sec, 60 fps or NEEDS CLARIFICATION]
+**Constraints**: Offline-first 100% untuk alur inti; izin lokasi latar belakang wajib; notifikasi harus muncul saat layar mati; tidak ada alarm yang menembus mode senyap; tidak ada pengumpulan data pribadi.
 
-**Constraints**: [domain-specific, e.g., <200ms p95, <100MB memory, offline-capable or NEEDS CLARIFICATION]
-
-**Scale/Scope**: [domain-specific, e.g., 10k users, 1M LOC, 50 screens or NEEDS CLARIFICATION]
+**Scale/Scope**: ±100 stasiun KRL Jabodetabek, satu pengguna perangkat, 5 layar utama (Beranda, Pilih Tujuan, Perjalanan Aktif, Riwayat, Pengaturan).
 
 ## Constitution Check
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-[Gates determined based on constitution file]
+Constitution diratifikasi pada 2026-11-08 sebagai **Railminder Constitution v1.0.0** (`.specify/memory/constitution.md`).
+
+| Gate | Prinsip | Status |
+|------|---------|--------|
+| Offline-first: alur inti berjalan tanpa jaringan | I. Offline-First Architecture | PASS — data stasiun dibundel di `assets/data/`, tanpa panggilan jaringan (FR-001, FR-015, SC-005) |
+| Privacy: data lokasi & riwayat hanya di perangkat | II. Privacy by Default & Zero Telemetry | PASS — tanpa akun, tanpa telemetry, tanpa cloud (Assumptions) |
+| Deterministic engine: logika alert murni & reproducible | III. Deterministic Pure Alert Engine | PASS — `journey_engine.dart` tanpa plugin, TV-01..TV-10 wajib lulus |
+| Battery & background reliability | IV. Battery & Background Reliability | PASS — FGS type `location`, `distanceFilter: 100`, filter akurasi 100 m, target ≤5%/jam (SC-003) |
+| Polite alerting: notifikasi + getar, tanpa audio paksa | V. Polite Public Transit Alerting | PASS — importance `max` + vibration pattern, tanpa suara (FR-005) |
+| Platform compliance: FGS type & izin sesuai kebijakan store | Technical Standards | PASS — kontrak izin terdokumentasi di `contracts/permissions.md` |
+
+**Post-Design Re-check**: Seluruh gate tetap PASS setelah Phase 1. Tidak ada pelanggaran yang perlu dijustifikasi; Complexity Tracking dibiarkan kosong.
 
 ## Project Structure
 
 ### Documentation (this feature)
 
 ```text
-specs/[###-feature]/
-├── plan.md              # This file (/speckit.plan command output)
-├── research.md          # Phase 0 output (/speckit.plan command)
-├── data-model.md        # Phase 1 output (/speckit.plan command)
-├── quickstart.md        # Phase 1 output (/speckit.plan command)
-├── contracts/           # Phase 1 output (/speckit.plan command)
-└── tasks.md             # Phase 2 output (/speckit.tasks command - NOT created by /speckit.plan)
+specs/001-krl-station-reminder/
+├── plan.md              # This file
+├── research.md          # Phase 0 output
+├── data-model.md        # Phase 1 output
+├── quickstart.md        # Phase 1 output
+├── contracts/           # Phase 1 output
+│   ├── alert-engine.md
+│   ├── notifications.md
+│   ├── permissions.md
+│   └── station-data.schema.json
+├── checklists/
+│   └── requirements.md
+└── tasks.md             # Phase 2 output (/speckit.tasks)
 ```
 
 ### Source Code (repository root)
-<!--
-  ACTION REQUIRED: Replace the placeholder tree below with the concrete layout
-  for this feature. Delete unused options and expand the chosen structure with
-  real paths (e.g., apps/admin, packages/something). The delivered plan must
-  not include Option labels.
--->
 
 ```text
-# [REMOVE IF UNUSED] Option 1: Single project (DEFAULT)
-src/
-├── models/
-├── services/
-├── cli/
-└── lib/
-
-tests/
-├── contract/
-├── integration/
-└── unit/
-
-# [REMOVE IF UNUSED] Option 2: Web application (when "frontend" + "backend" detected)
-backend/
-├── src/
+lib/
+├── main.dart
+├── app.dart
+├── core/
+│   ├── constants.dart          # ambang default, interval, channel id
+│   ├── theme.dart
+│   └── distance.dart           # haversine + filter akurasi
+├── data/
 │   ├── models/
-│   ├── services/
-│   └── api/
-└── tests/
+│   │   ├── station.dart
+│   │   ├── line.dart
+│   │   ├── journey.dart
+│   │   ├── alert_event.dart
+│   │   └── user_settings.dart
+│   ├── local/
+│   │   ├── app_database.dart   # sqflite schema + migrations
+│   │   ├── journey_store.dart  # active journey in shared_preferences
+│   │   └── station_asset_loader.dart
+│   └── repositories/
+│       ├── station_repository.dart
+│       ├── journey_repository.dart
+│       └── settings_repository.dart
+├── services/
+│   ├── permission_service.dart
+│   ├── location_service.dart   # geolocator stream + platform settings
+│   ├── journey_engine.dart     # pure alert logic (no plugin calls)
+│   └── notification_service.dart
+├── features/
+│   ├── home/
+│   ├── destination_picker/
+│   ├── active_journey/
+│   ├── history/
+│   └── settings/
+└── providers/
+    └── providers.dart
 
-frontend/
-├── src/
-│   ├── components/
-│   ├── pages/
-│   └── services/
-└── tests/
+assets/
+└── data/
+    └── krl_stations.json
 
-# [REMOVE IF UNUSED] Option 3: Mobile + API (when "iOS/Android" detected)
-api/
-└── [same as backend above]
+test/
+├── unit/
+│   ├── journey_engine_test.dart
+│   ├── distance_test.dart
+│   └── station_repository_test.dart
+└── widget/
+    └── active_journey_test.dart
 
-ios/ or android/
-└── [platform-specific structure: feature modules, UI flows, platform tests]
+integration_test/
+└── journey_flow_test.dart
+
+android/app/src/main/AndroidManifest.xml   # FGS type location + permissions
+ios/Runner/Info.plist                      # UIBackgroundModes + usage descriptions
 ```
 
-**Structure Decision**: [Document the selected structure and reference the real
-directories captured above]
+**Structure Decision**: Satu aplikasi Flutter dengan pemisahan `core`/`data`/`services`/`features`. Logika pemicu alert dipisah ke `journey_engine.dart` tanpa dependensi plugin agar dapat diuji sebagai fungsi murni. Tidak ada direktori backend.
 
 ## Complexity Tracking
 
-> **Fill ONLY if Constitution Check has violations that must be justified**
-
 | Violation | Why Needed | Simpler Alternative Rejected Because |
 |-----------|------------|-------------------------------------|
-| [e.g., 4th project] | [current need] | [why 3 projects insufficient] |
-| [e.g., Repository pattern] | [specific problem] | [why direct DB access insufficient] |
+| — | — | — |

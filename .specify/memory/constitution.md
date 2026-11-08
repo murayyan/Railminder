@@ -1,50 +1,72 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!--
+SYNC IMPACT REPORT
+Version change: [TEMPLATE] -> 1.0.0
+Modified principles: Initial constitution ratification for Railminder
+Added sections: Core Principles, Technical Standards, Quality Gates, Governance
+Removed sections: None
+Deferred items: None
+-->
+
+# Railminder Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Offline-First Architecture
+The core journey workflow (station selection, distance calculation, approach alerting, and trip completion) MUST function with 100% reliability with zero internet connection.
+- All station coordinates, line sequences, and metadata MUST be bundled locally inside application assets (`assets/data/krl_stations.json`).
+- No external network API or operator server MAY be required to start or finish a trip.
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+### II. Privacy by Default & Zero Telemetry
+User location samples, travel history, and travel patterns belong exclusively to the user's physical device.
+- Location samples MUST NOT be sent to any remote server or third-party analytical SDK.
+- The app MUST NOT require account registration, login, or personal identifiers.
+- Travel history MUST be stored locally and fully clearable by the user at any time.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### III. Deterministic Pure Alert Engine
+The alert trigger logic MUST be implemented as a pure, side-effect-free domain engine (`JourneyEngine`).
+- Decision logic MUST NOT directly invoke platform plugins, read system clocks, or poll hardware sensors.
+- State transitions, threshold evaluations, hysteresis, and debounce MUST be 100% reproducible via unit tests using deterministic location vectors.
+- All 10 defined test vectors (TV-01 through TV-10) MUST pass before any release.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### IV. Battery & Background Reliability
+Background location tracking is constrained by strict OS thermal and energy policies.
+- Background location on Android MUST be encapsulated within a foreground service of type `location` (`FOREGROUND_SERVICE_LOCATION`) with a persistent status notification.
+- Location streams MUST implement accuracy filtering (ignore samples with horizontal error >100 m) and reasonable distance filters (100 m) to prevent battery drain.
+- Energy consumption MUST NOT exceed an average of 5% battery drain per hour of continuous tracking.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### V. Polite Public Transit Alerting
+Alarms in commuter train cabins must alert the passenger without distressing neighboring commuters.
+- The primary alert MUST be a high-importance heads-up notification with a distinctive vibration pattern.
+- The app MUST NOT play loud audio alarms that bypass device silent/vibrate mode or disturb others in public carriages unless explicitly enabled by user override.
+- Actionable notification buttons ("Saya Sudah Turun" and "Saya Masih di Kereta") MUST be provided directly on the lock screen.
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+## Technical Standards
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+### Platform Support
+- Target framework: Flutter (Dart 3.5+, Flutter 3.24+).
+- Android target: Android 10+ (API 29+), complying with Android 14/15 Foreground Service types and notification permissions.
+- iOS target: iOS 16+, complying with `UIBackgroundModes: location` and CoreLocation usage disclosures.
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+### Storage & State Management
+- Ephemeral active journey state: `shared_preferences`.
+- Historical trip data: `sqflite` local database.
+- Application state: `flutter_riverpod` with strict separation of data layer, services, and UI.
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+## Quality Gates
+
+Before any pull request or merge to main:
+1. `flutter analyze` MUST pass with 0 errors and 0 new warnings.
+2. All unit tests (`flutter test test/unit/`) MUST pass.
+3. Engine test vectors TV-01 through TV-10 MUST pass.
+4. Android and iOS permission manifests MUST conform to the contracts.
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+- This Constitution supersedes all informal coding practices or conflicting documentation.
+- Any amendment to Core Principles requires bumping `CONSTITUTION_VERSION` according to Semantic Versioning:
+  - MAJOR: Removal or fundamental relaxation of Core Principles.
+  - MINOR: Addition of new principles or technical standards.
+  - PATCH: Wording clarifications and non-semantic corrections.
+- Ratified amendments MUST be dated and documented in the project log.
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 1.0.0 | **Ratified**: 2026-11-08 | **Last Amended**: 2026-11-08

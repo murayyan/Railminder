@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://railminder.app/schemas/station-data.schema.json",
+  "title": "Railminder Station Dataset",
+  "description": "Bundled offline dataset for KRL Commuter Line (Jabodetabek). Loaded from assets/data/krl_stations.json at app start.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "lines", "stations"],
+  "properties": {
+    "version": {
+      "type": "string",
+      "description": "Dataset version, ISO-8601 date of last verification (YYYY-MM-DD).",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+    },
+    "lines": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/line" }
+    },
+    "stations": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/station" }
+    }
+  },
+  "$defs": {
+    "line": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "colorHex", "stationIds"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Z][A-Z0-9_]{2,40}$",
+          "examples": ["BOGOR_LINE", "CIKARANG_LINE", "RANGKASBITUNG_LINE", "TANGERANG_LINE", "TANJUNG_PRIOK_LINE"]
+        },
+        "name": { "type": "string", "minLength": 3, "maxLength": 60 },
+        "colorHex": {
+          "type": "string",
+          "pattern": "^#[0-9A-F]{6}$"
+        },
+        "stationIds": {
+          "type": "array",
+          "minItems": 2,
+          "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^[A-Z]{2,5}$" }
+        }
+      }
+    },
+    "station": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "lineIds", "latitude", "longitude", "orderIndex"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Z]{2,5}$",
+          "description": "Official KRL station code, unique across the dataset.",
+          "examples": ["JAKK", "BOO", "MRI", "THB"]
+        },
+        "name": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 80,
+          "description": "Display name as shown to passengers."
+        },
+        "lineIds": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "type": "string", "pattern": "^[A-Z][A-Z0-9_]{2,40}$" }
+        },
+        "latitude": {
+          "type": "number",
+          "minimum": -7.0,
+          "maximum": -5.8,
+          "description": "WGS84 latitude, constrained to Jabodetabek and surrounding KRL service area."
+        },
+        "longitude": {
+          "type": "number",
+          "minimum": 106.3,
+          "maximum": 107.4,
+          "description": "WGS84 longitude, constrained to Jabodetabek and surrounding KRL service area."
+        },
+        "orderIndex": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Default ordering within the primary line, used for search ranking."
+        }
+      }
+    }
+  },
+  "$comment": "Cross-field validation (not expressible in JSON Schema) is enforced by StationRepository.validate(): every lineId referenced by a station exists in lines[], every stationId referenced by a line exists in stations[], station ids are unique, and each line's stationIds are ordered from one terminus to the other."
+}
