@@ -42,6 +42,8 @@ jobs:
         run: |
           xcodebuild -version
           xcode-select -p
+          flutter --version
+          flutter doctor -v || true
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
@@ -63,7 +65,20 @@ jobs:
         run: flutter test
 
       - name: Build iOS app without code signing
-        run: flutter build ios --release --no-codesign
+        id: build_ios
+        run: |
+          set -o pipefail
+          flutter build ios --release --no-codesign 2>&1 | tee /tmp/flutter_build_ios.log
+
+      - name: Dump build error on failure
+        if: failure()
+        run: |
+          {
+            echo "### Flutter iOS build failed"
+            echo '```'
+            tail -n 200 /tmp/flutter_build_ios.log || true
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"
 
       - name: Package IPA
         id: package
