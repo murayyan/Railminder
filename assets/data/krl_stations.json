@@ -1,0 +1,952 @@
+{
+  "version": "2026-11-08",
+  "lines": [
+    {
+      "id": "BOGOR_LINE",
+      "name": "Lin Bogor",
+      "colorHex": "#E31837",
+      "stationIds": [
+        "JAKK",
+        "JAY",
+        "MGB",
+        "SW",
+        "JUA",
+        "GDD",
+        "CKI",
+        "MRI",
+        "TEB",
+        "CWG",
+        "DRN",
+        "PSMB",
+        "PSM",
+        "TGB",
+        "LNA",
+        "UP",
+        "UI",
+        "POC",
+        "DPB",
+        "DP",
+        "CTA",
+        "CLT",
+        "BOO"
+      ]
+    },
+    {
+      "id": "NAMBO_BRANCH",
+      "name": "Lin Nambo",
+      "colorHex": "#E31837",
+      "stationIds": [
+        "CTA",
+        "PDRG",
+        "CBN",
+        "NBO"
+      ]
+    },
+    {
+      "id": "CIKARANG_LINE",
+      "name": "Lin Cikarang",
+      "colorHex": "#008080",
+      "stationIds": [
+        "CKR",
+        "TLM",
+        "CBT",
+        "TBN",
+        "BKST",
+        "BKS",
+        "KRJ",
+        "CKG",
+        "BUA",
+        "KLDB",
+        "KLD",
+        "JNG",
+        "MTR",
+        "MRI",
+        "SUD",
+        "BNI",
+        "KRT",
+        "THB",
+        "DU",
+        "AK",
+        "KPB",
+        "RJW",
+        "KMO",
+        "PSE",
+        "GST",
+        "KMT",
+        "POK"
+      ]
+    },
+    {
+      "id": "RANGKASBITUNG_LINE",
+      "name": "Lin Rangkasbitung",
+      "colorHex": "#2E7D32",
+      "stationIds": [
+        "THB",
+        "PLM",
+        "KBY",
+        "PDR",
+        "JMG",
+        "SDM",
+        "RW",
+        "SRP",
+        "CSK",
+        "CC",
+        "PRJ",
+        "CJT",
+        "DAR",
+        "TEJ",
+        "TGS",
+        "CKO",
+        "MJA",
+        "CTR",
+        "RK"
+      ]
+    },
+    {
+      "id": "TANGERANG_LINE",
+      "name": "Lin Tangerang",
+      "colorHex": "#8D6E63",
+      "stationIds": [
+        "DU",
+        "PSG",
+        "TKO",
+        "BDI",
+        "RBO",
+        "KLDS",
+        "PIW",
+        "BPR",
+        "THT",
+        "TNG"
+      ]
+    },
+    {
+      "id": "TANJUNG_PRIOK_LINE",
+      "name": "Lin Tanjung Priuk",
+      "colorHex": "#E91E63",
+      "stationIds": [
+        "JAKK",
+        "KPB",
+        "AC",
+        "TPK"
+      ]
+    }
+  ],
+  "stations": [
+    {
+      "id": "JAKK",
+      "name": "Jakarta Kota",
+      "lineIds": [
+        "BOGOR_LINE",
+        "TANJUNG_PRIOK_LINE"
+      ],
+      "latitude": -6.137583,
+      "longitude": 106.81462,
+      "orderIndex": 1
+    },
+    {
+      "id": "JAY",
+      "name": "Jayakarta",
+      "lineIds": [
+        "BOGOR_LINE"
+      ],
+      "latitude": -6.1413,
+      "longitude": 106.823132,
+      "orderIndex": 2
+    },
+    {
+      "id": "MGB",
+      "name": "Mangga Besar",
+      "lineIds": [
+        "BOGOR_LINE"
+      ],
+      "latitude": -6.149804,
+      "longitude": 106.826983,
+      "orderIndex": 3
+    },
+    {
+      "id": "SW",
+      "name": "Sawah Besar",
+      "lineIds": [
+        "BOGOR_LINE"
+      ],
+      "latitude": -6.160667,
+      "longitude": 106.827655,
+      "orderIndex": 4
+    },
+    {
+      "id": "JUA",
+      "name": "Juanda",
+      "lineIds": [
+        "BOGOR_LINE"
+      ],
+      "latitude": -6.166675,
+      "longitude": 106.830461,
+      "orderIndex": 5
+    },
+    {
+      "id": "GDD",
+      "name": "Gondangdia",
+      "lineIds": [
+        "BOGOR_LINE"
+      ],
+      "latitude": -6.185911,
+      "longitude": 106.832566,
+      "orderIndex": 6
+    },
+    {
+      "id": "CKI",
+      "name": "Cikini",
+      "lineIds": [
+        "BOGOR_LINE"
+      ],
+      "latitude": -6.198505,
+      "longitude": 106.84128,
+      "orderIndex": 7
+    },
+    {
+      "id": "MRI",
+      "name": "Manggarai",
+      "lineIds": [
+        "BOGOR_LINE",
+        "CIKARANG_LINE"
+      ],
+      "latitude": -6.208654,
+      "longitude": 106.845668,
+      "orderIndex": 8
+    },
+    {
+      "id": "TEB",
+      "name": "Tebet",
+      "lineIds": [
+        "BOGOR_LINE"
+      ],
+      "latitude": -6.226398,
+      "longitude": 106.858439,
+      "orderIndex": 9
+    },
+    {
+      "id": "CWG",
+      "name": "Cawang",
+      "lineIds": [
+        "BOGOR_LINE"
+      ],
+      "latitude": -6.245907,
+      "longitude": 106.87123,
+      "orderIndex": 10
+    },
+    {
+      "id": "DRN",
+      "name": "Duren Kalibata",
+      "lineIds": [
+        "BOGOR_LINE"
+      ],
+      "latitude": -6.255201,
+      "longitude": 106.855167,
+      "orderIndex": 11
+    },
+    {
+      "id": "PSMB",
+      "name": "Pasar Minggu Baru",
+      "lineIds": [
+        "BOGOR_LINE"
+      ],
+      "latitude": -6.262798,
+      "longitude": 106.851796,
+      "orderIndex": 12
+    },
+    {
+      "id": "PSM",
+      "name": "Pasar Minggu",
+      "lineIds": [
+        "BOGOR_LINE"
+      ],
+      "latitude": -6.283332,
+      "longitude": 106.844856,
+      "orderIndex": 13
+    },
+    {
+      "id": "TGB",
+      "name": "Tanjung Barat",
+      "lineIds": [
+        "BOGOR_LINE"
+      ],
+      "latitude": -6.308041,
+      "longitude": 106.838949,
+      "orderIndex": 14
+    },
+    {
+      "id": "LNA",
+      "name": "Lenteng Agung",
+      "lineIds": [
+        "BOGOR_LINE"
+      ],
+      "latitude": -6.330308,
+      "longitude": 106.834679,
+      "orderIndex": 15
+    },
+    {
+      "id": "UP",
+      "name": "Universitas Pancasila",
+      "lineIds": [
+        "BOGOR_LINE"
+      ],
+      "latitude": -6.339345,
+      "longitude": 106.834263,
+      "orderIndex": 16
+    },
+    {
+      "id": "UI",
+      "name": "Universitas Indonesia",
+      "lineIds": [
+        "BOGOR_LINE"
+      ],
+      "latitude": -6.360431,
+      "longitude": 106.831782,
+      "orderIndex": 17
+    },
+    {
+      "id": "POC",
+      "name": "Pondok Cina",
+      "lineIds": [
+        "BOGOR_LINE"
+      ],
+      "latitude": -6.369059,
+      "longitude": 106.832084,
+      "orderIndex": 18
+    },
+    {
+      "id": "DPB",
+      "name": "Depok Baru",
+      "lineIds": [
+        "BOGOR_LINE"
+      ],
+      "latitude": -6.391129,
+      "longitude": 106.821641,
+      "orderIndex": 19
+    },
+    {
+      "id": "DP",
+      "name": "Depok",
+      "lineIds": [
+        "BOGOR_LINE"
+      ],
+      "latitude": -6.404826,
+      "longitude": 106.817084,
+      "orderIndex": 20
+    },
+    {
+      "id": "CTA",
+      "name": "Citayam",
+      "lineIds": [
+        "BOGOR_LINE",
+        "NAMBO_BRANCH"
+      ],
+      "latitude": -6.448824,
+      "longitude": 106.802362,
+      "orderIndex": 21
+    },
+    {
+      "id": "CLT",
+      "name": "Cilebut",
+      "lineIds": [
+        "BOGOR_LINE"
+      ],
+      "latitude": -6.530724,
+      "longitude": 106.800688,
+      "orderIndex": 22
+    },
+    {
+      "id": "BOO",
+      "name": "Bogor",
+      "lineIds": [
+        "BOGOR_LINE"
+      ],
+      "latitude": -6.594289,
+      "longitude": 106.790769,
+      "orderIndex": 23
+    },
+    {
+      "id": "PDRG",
+      "name": "Pondok Rajeg",
+      "lineIds": [
+        "NAMBO_BRANCH"
+      ],
+      "latitude": -6.460783,
+      "longitude": 106.824296,
+      "orderIndex": 24
+    },
+    {
+      "id": "CBN",
+      "name": "Cibinong",
+      "lineIds": [
+        "NAMBO_BRANCH"
+      ],
+      "latitude": -6.464248,
+      "longitude": 106.85252,
+      "orderIndex": 25
+    },
+    {
+      "id": "NBO",
+      "name": "Nambo",
+      "lineIds": [
+        "NAMBO_BRANCH"
+      ],
+      "latitude": -6.466282,
+      "longitude": 106.906269,
+      "orderIndex": 26
+    },
+    {
+      "id": "CKR",
+      "name": "Cikarang",
+      "lineIds": [
+        "CIKARANG_LINE"
+      ],
+      "latitude": -6.255314,
+      "longitude": 107.145073,
+      "orderIndex": 27
+    },
+    {
+      "id": "TLM",
+      "name": "Metland Telagamurni",
+      "lineIds": [
+        "CIKARANG_LINE"
+      ],
+      "latitude": -6.257474,
+      "longitude": 107.111227,
+      "orderIndex": 28
+    },
+    {
+      "id": "CBT",
+      "name": "Cibitung",
+      "lineIds": [
+        "CIKARANG_LINE"
+      ],
+      "latitude": -6.261825,
+      "longitude": 107.083798,
+      "orderIndex": 29
+    },
+    {
+      "id": "TBN",
+      "name": "Tambun",
+      "lineIds": [
+        "CIKARANG_LINE"
+      ],
+      "latitude": -6.25855,
+      "longitude": 107.055804,
+      "orderIndex": 30
+    },
+    {
+      "id": "BKST",
+      "name": "Bekasi Timur",
+      "lineIds": [
+        "CIKARANG_LINE"
+      ],
+      "latitude": -6.246795,
+      "longitude": 107.018105,
+      "orderIndex": 31
+    },
+    {
+      "id": "BKS",
+      "name": "Bekasi",
+      "lineIds": [
+        "CIKARANG_LINE"
+      ],
+      "latitude": -6.236214,
+      "longitude": 106.998744,
+      "orderIndex": 32
+    },
+    {
+      "id": "KRJ",
+      "name": "Kranji",
+      "lineIds": [
+        "CIKARANG_LINE"
+      ],
+      "latitude": -6.224513,
+      "longitude": 106.979827,
+      "orderIndex": 33
+    },
+    {
+      "id": "CKG",
+      "name": "Cakung",
+      "lineIds": [
+        "CIKARANG_LINE"
+      ],
+      "latitude": -6.219081,
+      "longitude": 106.952479,
+      "orderIndex": 34
+    },
+    {
+      "id": "BUA",
+      "name": "Buaran",
+      "lineIds": [
+        "CIKARANG_LINE"
+      ],
+      "latitude": -6.215606,
+      "longitude": 106.92316,
+      "orderIndex": 35
+    },
+    {
+      "id": "KLDB",
+      "name": "Klender Baru",
+      "lineIds": [
+        "CIKARANG_LINE"
+      ],
+      "latitude": -6.217659,
+      "longitude": 106.940183,
+      "orderIndex": 36
+    },
+    {
+      "id": "KLD",
+      "name": "Klender",
+      "lineIds": [
+        "CIKARANG_LINE"
+      ],
+      "latitude": -6.213319,
+      "longitude": 106.899413,
+      "orderIndex": 37
+    },
+    {
+      "id": "JNG",
+      "name": "Jatinegara",
+      "lineIds": [
+        "CIKARANG_LINE"
+      ],
+      "latitude": -6.214925,
+      "longitude": 106.870339,
+      "orderIndex": 38
+    },
+    {
+      "id": "MTR",
+      "name": "Matraman",
+      "lineIds": [
+        "CIKARANG_LINE"
+      ],
+      "latitude": -6.195077,
+      "longitude": 106.859983,
+      "orderIndex": 39
+    },
+    {
+      "id": "SUD",
+      "name": "Sudirman",
+      "lineIds": [
+        "CIKARANG_LINE"
+      ],
+      "latitude": -6.202408,
+      "longitude": 106.823449,
+      "orderIndex": 40
+    },
+    {
+      "id": "BNI",
+      "name": "BNI City",
+      "lineIds": [
+        "CIKARANG_LINE"
+      ],
+      "latitude": -6.201594,
+      "longitude": 106.819717,
+      "orderIndex": 41
+    },
+    {
+      "id": "KRT",
+      "name": "Karet",
+      "lineIds": [
+        "CIKARANG_LINE"
+      ],
+      "latitude": -6.200833,
+      "longitude": 106.8175,
+      "orderIndex": 42
+    },
+    {
+      "id": "THB",
+      "name": "Tanah Abang",
+      "lineIds": [
+        "CIKARANG_LINE",
+        "RANGKASBITUNG_LINE"
+      ],
+      "latitude": -6.185713,
+      "longitude": 106.810894,
+      "orderIndex": 43
+    },
+    {
+      "id": "DU",
+      "name": "Duri",
+      "lineIds": [
+        "CIKARANG_LINE",
+        "TANGERANG_LINE"
+      ],
+      "latitude": -6.155276,
+      "longitude": 106.801297,
+      "orderIndex": 44
+    },
+    {
+      "id": "AK",
+      "name": "Angke",
+      "lineIds": [
+        "CIKARANG_LINE"
+      ],
+      "latitude": -6.144737,
+      "longitude": 106.800779,
+      "orderIndex": 45
+    },
+    {
+      "id": "KPB",
+      "name": "Kampung Bandan",
+      "lineIds": [
+        "CIKARANG_LINE",
+        "TANJUNG_PRIOK_LINE"
+      ],
+      "latitude": -6.132702,
+      "longitude": 106.828487,
+      "orderIndex": 46
+    },
+    {
+      "id": "RJW",
+      "name": "Rajawali",
+      "lineIds": [
+        "CIKARANG_LINE"
+      ],
+      "latitude": -6.1451,
+      "longitude": 106.836832,
+      "orderIndex": 47
+    },
+    {
+      "id": "KMO",
+      "name": "Kemayoran",
+      "lineIds": [
+        "CIKARANG_LINE"
+      ],
+      "latitude": -6.161703,
+      "longitude": 106.841401,
+      "orderIndex": 48
+    },
+    {
+      "id": "PSE",
+      "name": "Pasar Senen",
+      "lineIds": [
+        "CIKARANG_LINE"
+      ],
+      "latitude": -6.174423,
+      "longitude": 106.844574,
+      "orderIndex": 49
+    },
+    {
+      "id": "GST",
+      "name": "Gang Sentiong",
+      "lineIds": [
+        "CIKARANG_LINE"
+      ],
+      "latitude": -6.186153,
+      "longitude": 106.850871,
+      "orderIndex": 50
+    },
+    {
+      "id": "KMT",
+      "name": "Kramat",
+      "lineIds": [
+        "CIKARANG_LINE"
+      ],
+      "latitude": -6.19362,
+      "longitude": 106.856512,
+      "orderIndex": 51
+    },
+    {
+      "id": "POK",
+      "name": "Pondok Jati",
+      "lineIds": [
+        "CIKARANG_LINE"
+      ],
+      "latitude": -6.209124,
+      "longitude": 106.862342,
+      "orderIndex": 52
+    },
+    {
+      "id": "PLM",
+      "name": "Palmerah",
+      "lineIds": [
+        "RANGKASBITUNG_LINE"
+      ],
+      "latitude": -6.20792,
+      "longitude": 106.797232,
+      "orderIndex": 53
+    },
+    {
+      "id": "KBY",
+      "name": "Kebayoran",
+      "lineIds": [
+        "RANGKASBITUNG_LINE"
+      ],
+      "latitude": -6.23723,
+      "longitude": 106.782534,
+      "orderIndex": 54
+    },
+    {
+      "id": "PDR",
+      "name": "Pondok Ranji",
+      "lineIds": [
+        "RANGKASBITUNG_LINE"
+      ],
+      "latitude": -6.276683,
+      "longitude": 106.744693,
+      "orderIndex": 55
+    },
+    {
+      "id": "JMG",
+      "name": "Jurangmangu",
+      "lineIds": [
+        "RANGKASBITUNG_LINE"
+      ],
+      "latitude": -6.288582,
+      "longitude": 106.729146,
+      "orderIndex": 56
+    },
+    {
+      "id": "SDM",
+      "name": "Sudimara",
+      "lineIds": [
+        "RANGKASBITUNG_LINE"
+      ],
+      "latitude": -6.296844,
+      "longitude": 106.712647,
+      "orderIndex": 57
+    },
+    {
+      "id": "RW",
+      "name": "Rawa Buntu",
+      "lineIds": [
+        "RANGKASBITUNG_LINE"
+      ],
+      "latitude": -6.314884,
+      "longitude": 106.676152,
+      "orderIndex": 58
+    },
+    {
+      "id": "SRP",
+      "name": "Serpong",
+      "lineIds": [
+        "RANGKASBITUNG_LINE"
+      ],
+      "latitude": -6.320153,
+      "longitude": 106.665584,
+      "orderIndex": 59
+    },
+    {
+      "id": "CSK",
+      "name": "Cisauk",
+      "lineIds": [
+        "RANGKASBITUNG_LINE"
+      ],
+      "latitude": -6.324445,
+      "longitude": 106.641626,
+      "orderIndex": 60
+    },
+    {
+      "id": "CC",
+      "name": "Cicayur",
+      "lineIds": [
+        "RANGKASBITUNG_LINE"
+      ],
+      "latitude": -6.329683,
+      "longitude": 106.618971,
+      "orderIndex": 61
+    },
+    {
+      "id": "PRJ",
+      "name": "Parungpanjang",
+      "lineIds": [
+        "RANGKASBITUNG_LINE"
+      ],
+      "latitude": -6.344344,
+      "longitude": 106.569846,
+      "orderIndex": 62
+    },
+    {
+      "id": "CJT",
+      "name": "Cilejit",
+      "lineIds": [
+        "RANGKASBITUNG_LINE"
+      ],
+      "latitude": -6.354265,
+      "longitude": 106.509643,
+      "orderIndex": 63
+    },
+    {
+      "id": "DAR",
+      "name": "Daru",
+      "lineIds": [
+        "RANGKASBITUNG_LINE"
+      ],
+      "latitude": -6.33797,
+      "longitude": 106.492563,
+      "orderIndex": 64
+    },
+    {
+      "id": "TEJ",
+      "name": "Tenjo",
+      "lineIds": [
+        "RANGKASBITUNG_LINE"
+      ],
+      "latitude": -6.327318,
+      "longitude": 106.461659,
+      "orderIndex": 65
+    },
+    {
+      "id": "TGS",
+      "name": "Tigaraksa",
+      "lineIds": [
+        "RANGKASBITUNG_LINE"
+      ],
+      "latitude": -6.328836,
+      "longitude": 106.43406,
+      "orderIndex": 66
+    },
+    {
+      "id": "CKO",
+      "name": "Cikoya",
+      "lineIds": [
+        "RANGKASBITUNG_LINE"
+      ],
+      "latitude": -6.335738,
+      "longitude": 106.411655,
+      "orderIndex": 67
+    },
+    {
+      "id": "MJA",
+      "name": "Maja",
+      "lineIds": [
+        "RANGKASBITUNG_LINE"
+      ],
+      "latitude": -6.332503,
+      "longitude": 106.396479,
+      "orderIndex": 68
+    },
+    {
+      "id": "CTR",
+      "name": "Citeras",
+      "lineIds": [
+        "RANGKASBITUNG_LINE"
+      ],
+      "latitude": -6.335058,
+      "longitude": 106.332669,
+      "orderIndex": 69
+    },
+    {
+      "id": "RK",
+      "name": "Rangkasbitung",
+      "lineIds": [
+        "RANGKASBITUNG_LINE"
+      ],
+      "latitude": -6.352779,
+      "longitude": 106.251525,
+      "orderIndex": 70
+    },
+    {
+      "id": "PSG",
+      "name": "Pesing",
+      "lineIds": [
+        "TANGERANG_LINE"
+      ],
+      "latitude": -6.161252,
+      "longitude": 106.771908,
+      "orderIndex": 71
+    },
+    {
+      "id": "TKO",
+      "name": "Taman Kota",
+      "lineIds": [
+        "TANGERANG_LINE"
+      ],
+      "latitude": -6.158627,
+      "longitude": 106.756573,
+      "orderIndex": 72
+    },
+    {
+      "id": "BDI",
+      "name": "Bojong Indah",
+      "lineIds": [
+        "TANGERANG_LINE"
+      ],
+      "latitude": -6.160214,
+      "longitude": 106.736134,
+      "orderIndex": 73
+    },
+    {
+      "id": "RBO",
+      "name": "Rawa Buaya",
+      "lineIds": [
+        "TANGERANG_LINE"
+      ],
+      "latitude": -6.162744,
+      "longitude": 106.722754,
+      "orderIndex": 74
+    },
+    {
+      "id": "KLDS",
+      "name": "Kalideres",
+      "lineIds": [
+        "TANGERANG_LINE"
+      ],
+      "latitude": -6.165966,
+      "longitude": 106.703728,
+      "orderIndex": 75
+    },
+    {
+      "id": "PIW",
+      "name": "Poris",
+      "lineIds": [
+        "TANGERANG_LINE"
+      ],
+      "latitude": -6.169735,
+      "longitude": 106.680752,
+      "orderIndex": 76
+    },
+    {
+      "id": "BPR",
+      "name": "Batu Ceper",
+      "lineIds": [
+        "TANGERANG_LINE"
+      ],
+      "latitude": -6.172027,
+      "longitude": 106.665287,
+      "orderIndex": 77
+    },
+    {
+      "id": "THT",
+      "name": "Tanah Tinggi",
+      "lineIds": [
+        "TANGERANG_LINE"
+      ],
+      "latitude": -6.17517,
+      "longitude": 106.64671,
+      "orderIndex": 78
+    },
+    {
+      "id": "TNG",
+      "name": "Tangerang",
+      "lineIds": [
+        "TANGERANG_LINE"
+      ],
+      "latitude": -6.176975,
+      "longitude": 106.632011,
+      "orderIndex": 79
+    },
+    {
+      "id": "AC",
+      "name": "Ancol",
+      "lineIds": [
+        "TANJUNG_PRIOK_LINE"
+      ],
+      "latitude": -6.128115,
+      "longitude": 106.845137,
+      "orderIndex": 80
+    },
+    {
+      "id": "TPK",
+      "name": "Tanjung Priuk",
+      "lineIds": [
+        "TANJUNG_PRIOK_LINE"
+      ],
+      "latitude": -6.110691,
+      "longitude": 106.881498,
+      "orderIndex": 81
+    }
+  ]
+}

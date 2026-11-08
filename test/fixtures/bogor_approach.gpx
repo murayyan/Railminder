@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.1" creator="Railminder" xmlns="http://www.topografix.com/GPX/1/1">
+  <trk>
+    <name>Bogor approach</name>
+    <trkseg>
+      <trkpt lat="-6.578391" lon="106.774766"><ele>250</ele><time>2026-11-08T09:10:00+07:00</time></trkpt>
+      <trkpt lat="-6.584114" lon="106.780527"><ele>250</ele><time>2026-11-08T09:11:00+07:00</time></trkpt>
+      <trkpt lat="-6.585386" lon="106.781807"><ele>250</ele><time>2026-11-08T09:12:00+07:00</time></trkpt>
+      <trkpt lat="-6.592381" lon="106.788849"><ele>250</ele><time>2026-11-08T09:13:00+07:00</time></trkpt>
+    </trkseg>
+  </trk>
+</gpx>

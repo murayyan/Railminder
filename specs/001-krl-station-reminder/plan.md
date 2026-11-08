@@ -130,3 +130,5 @@ ios/Runner/Info.plist                      # UIBackgroundModes + usage descripti
 | Violation | Why Needed | Simpler Alternative Rejected Because |
 |-----------|------------|-------------------------------------|
 | — | — | — |
+
+**Verifikasi pasca-implementasi (2026-11-08)**: tidak ada penyimpangan dari Constitution v1.0.0. `flutter analyze` bersih (0 issue), 51 unit + widget test lulus termasuk TV-01..TV-10, tidak ditemukan pemanggilan jaringan di `lib/`, dan seluruh notifikasi memakai `playSound: false` dengan getar sebagai satu-satunya sinyal fisik. Detail bukti ada di `docs/validation-results.md`.

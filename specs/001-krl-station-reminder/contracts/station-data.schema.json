@@ -78,9 +78,9 @@
         },
         "longitude": {
           "type": "number",
-          "minimum": 106.3,
+          "minimum": 106.1,
           "maximum": 107.4,
-          "description": "WGS84 longitude, constrained to Jabodetabek and surrounding KRL service area."
+          "description": "WGS84 longitude, constrained to the Jabodetabek KRL service area including the Rangkasbitung terminus."
         },
         "orderIndex": {
           "type": "integer",

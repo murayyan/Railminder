@@ -24,16 +24,16 @@ Flutter single-app: `lib/`, `test/`, `integration_test/`, `assets/`, `android/`,
 
 **Purpose**: Scaffold proyek Flutter dan konfigurasi platform.
 
-- [ ] T001 Scaffold Flutter app Android+iOS dengan `flutter create --org app.railminder --platforms android,ios .` di root repo, lalu pastikan `pubspec.yaml` memakai `name: railminder`
-- [ ] T002 Tambahkan dependensi runtime di `pubspec.yaml`: `flutter_riverpod`, `geolocator`, `flutter_local_notifications`, `shared_preferences`, `sqflite`, `permission_handler`, `intl`; lalu jalankan `flutter pub get`
-- [ ] T003 [P] Tambahkan dev dependencies `flutter_lints` dan `integration_test` serta konfigurasi linter di `analysis_options.yaml`
-- [ ] T004 [P] Daftarkan izin dan foreground service type `location` di `android/app/src/main/AndroidManifest.xml` persis sesuai [contracts/permissions.md](./contracts/permissions.md), termasuk `POST_NOTIFICATIONS`, `ACCESS_BACKGROUND_LOCATION`, `FOREGROUND_SERVICE_LOCATION`
-- [ ] T005 [P] Daftarkan `UIBackgroundModes: location` dan tiga `NSLocation*UsageDescription` di `ios/Runner/Info.plist` sesuai [contracts/permissions.md](./contracts/permissions.md)
-- [ ] T006 [P] Set `minSdk 29`, `compileSdk 36`, `targetSdk 36` di `android/app/build.gradle.kts`; set deployment target `16.0` di `ios/Podfile`
-- [ ] T007 [P] Buat `lib/core/constants.dart` berisi channel ID `station_approach`/`journey_status`, `armMargin = 500`, `minAlertCooldown = 30s`, `maxSampleAge = 30s`, dan default ambang 1500 m
-- [ ] T008 [P] Buat `lib/core/theme.dart` dengan tema Material 3 dan warna jalur KRL
-- [ ] T009 [P] Susun dataset `assets/data/krl_stations.json` untuk stasiun KRL Jabodetabek dan validasi terhadap [contracts/station-data.schema.json](./contracts/station-data.schema.json); daftarkan folder `assets/data/` di `pubspec.yaml`
-- [ ] T010 [P] Siapkan track GPX uji pendekatan Bogor di `test/fixtures/bogor_approach.gpx` (titik 2.5 km → 1.6 km → 1.4 km → 0.3 km dari BOO)
+- [x] T001 Scaffold Flutter app Android+iOS dengan `flutter create --org app.railminder --platforms android,ios .` di root repo, lalu pastikan `pubspec.yaml` memakai `name: railminder`
+- [x] T002 Tambahkan dependensi runtime di `pubspec.yaml`: `flutter_riverpod`, `geolocator`, `flutter_local_notifications`, `shared_preferences`, `sqflite`, `permission_handler`, `intl`; lalu jalankan `flutter pub get`
+- [x] T003 [P] Tambahkan dev dependencies `flutter_lints` dan `integration_test` serta konfigurasi linter di `analysis_options.yaml`
+- [x] T004 [P] Daftarkan izin dan foreground service type `location` di `android/app/src/main/AndroidManifest.xml` persis sesuai [contracts/permissions.md](./contracts/permissions.md), termasuk `POST_NOTIFICATIONS`, `ACCESS_BACKGROUND_LOCATION`, `FOREGROUND_SERVICE_LOCATION`
+- [x] T005 [P] Daftarkan `UIBackgroundModes: location` dan tiga `NSLocation*UsageDescription` di `ios/Runner/Info.plist` sesuai [contracts/permissions.md](./contracts/permissions.md)
+- [x] T006 [P] Set `minSdk 29`, `compileSdk 36`, `targetSdk 36` di `android/app/build.gradle.kts`; set deployment target `16.0` di `ios/Podfile`
+- [x] T007 [P] Buat `lib/core/constants.dart` berisi channel ID `station_approach`/`journey_status`, `armMargin = 500`, `minAlertCooldown = 30s`, `maxSampleAge = 30s`, dan default ambang 1500 m
+- [x] T008 [P] Buat `lib/core/theme.dart` dengan tema Material 3 dan warna jalur KRL
+- [x] T009 [P] Susun dataset `assets/data/krl_stations.json` untuk stasiun KRL Jabodetabek dan validasi terhadap [contracts/station-data.schema.json](./contracts/station-data.schema.json); daftarkan folder `assets/data/` di `pubspec.yaml`
+- [x] T010 [P] Siapkan track GPX uji pendekatan Bogor di `test/fixtures/bogor_approach.gpx` (titik 2.5 km → 1.6 km → 1.4 km → 0.3 km dari BOO)
 
 **Checkpoint**: Proyek bisa di-build di Android; aset dan izin siap.
 
@@ -45,26 +45,26 @@ Flutter single-app: `lib/`, `test/`, `integration_test/`, `assets/`, `android/`,
 
 **⚠️ CRITICAL**: Tidak ada user story yang boleh dimulai sebelum fase ini selesai.
 
-- [ ] T011 [P] Buat `lib/data/models/station.dart`: field `id` (2–5 huruf kapital), `name` (3–80 char), `lineIds`, `latitude` (-7.0..-5.8), `longitude` (106.3..107.4), `orderIndex` (≥0) sesuai [data-model.md](./data-model.md), termasuk `fromJson` dengan validasi rentang
-- [ ] T012 [P] Buat `lib/data/models/line.dart`: field `id`, `name`, `colorHex` (`^#[0-9A-F]{6}$`), `stationIds` (min 2, unik)
-- [ ] T013 [P] Buat `lib/data/models/enums.dart`: `JourneyStatus {active, completed, cancelled}`, `ResolutionType {confirmedArrived, manualStop, stillOnTrainTimeout}`, `UserAlertAction {arrived, stillOnTrain, dismissed, timedOut}`
-- [ ] T014 [P] Buat `lib/data/models/location_sample.dart`: `latitude`, `longitude`, `accuracy`, `speed?`, `timestamp`, plus getter `isReliable` (accuracy ≤100 m dan umur ≤30 s)
-- [ ] T015 [P] Buat `lib/data/models/journey.dart`: seluruh field di [data-model.md](./data-model.md) §3 termasuk `alertThresholdMeters`, `alertTriggeredCount`, `firstAlertTriggeredAt`, `finalResolution`
-- [ ] T016 [P] Buat `lib/data/models/alert_event.dart`: `id`, `journeyId`, `triggeredAt`, `distanceMeters`, `accuracyMeters`, `isRepeat`, `userAction?`, `actionTimestamp?`
-- [ ] T017 [P] Buat `lib/data/models/user_settings.dart` dengan default `alertDistanceMeters: 1500`, `enableVibration: true`, `repeatIntervalMinutes: 3`, `maxRepeats: 3`
-- [ ] T018 [P] Implementasikan haversine dan filter sampel di `lib/core/distance.dart` (meter, akurasi, umur sampel) agar tidak bergantung pada plugin geolocator di unit test
-- [ ] T019 [P] Buat `lib/data/local/app_database.dart`: sqflite schema v1 untuk tabel `journeys` dan `alert_events` sesuai [data-model.md](./data-model.md), plus `onCreate`/`onUpgrade`
-- [ ] T020 [P] Buat `lib/data/local/station_asset_loader.dart` untuk membaca `assets/data/krl_stations.json` dan mem-parse ke `Station`/`Line`
-- [ ] T021 Buat `lib/data/repositories/station_repository.dart`: load aset sekali, validasi silang `lineIds`/`stationIds`/keunikan id, sediakan pencarian nama tanpa jaringan
-- [ ] T022 [P] Buat `test/unit/station_repository_test.dart`: dataset lolos schema, tidak ada referensi jalur/stasiun yatim, id unik, urutan jalur konsisten
-- [ ] T023 [P] Buat `lib/data/repositories/settings_repository.dart` (shared_preferences) dengan round-trip semua field `UserSettings`
-- [ ] T024 Buat `lib/data/repositories/journey_repository.dart`: simpan `ActiveJourneyState` ke shared_preferences, tulis `Journey`/`AlertEvent` ke sqflite, query riwayat, hapus riwayat
-- [ ] T025 [P] Buat `lib/providers/providers.dart` yang mendaftarkan provider repository, settings, station list, dan database
-- [ ] T026 [P] Buat `lib/app.dart` dan `lib/main.dart`: `ProviderScope`, MaterialApp, rute awal ke `HomeScreen`
-- [ ] T027 Buat `lib/services/permission_service.dart`: cek `Geolocator.isLocationServiceEnabled`, status izin, `openAppSettings`, `openLocationSettings`, dan hasil terstruktur untuk UI (FR-011)
-- [ ] T028 Buat `lib/services/notification_service.dart`: inisialisasi channel `station_approach` (importance max, vibration `[0,500,200,500,200,800]`, sound null) dan `journey_status`, iOS category `STATION_APPROACH` dengan dua action, serta parser payload JSON sesuai [contracts/notifications.md](./contracts/notifications.md)
-- [ ] T029 Implementasikan bootstrap pemulihan `ActiveJourneyState` saat app start di `lib/main.dart` dan provider `activeJourneyProvider` (fondasi FR-013)
-- [ ] T030 [P] Buat `test/unit/settings_repository_test.dart` dan `test/unit/journey_repository_test.dart` untuk round-trip storage dan query riwayat
+- [x] T011 [P] Buat `lib/data/models/station.dart`: field `id` (2–5 huruf kapital), `name` (3–80 char), `lineIds`, `latitude` (-7.0..-5.8), `longitude` (106.3..107.4), `orderIndex` (≥0) sesuai [data-model.md](./data-model.md), termasuk `fromJson` dengan validasi rentang
+- [x] T012 [P] Buat `lib/data/models/line.dart`: field `id`, `name`, `colorHex` (`^#[0-9A-F]{6}$`), `stationIds` (min 2, unik)
+- [x] T013 [P] Buat `lib/data/models/enums.dart`: `JourneyStatus {active, completed, cancelled}`, `ResolutionType {confirmedArrived, manualStop, stillOnTrainTimeout}`, `UserAlertAction {arrived, stillOnTrain, dismissed, timedOut}`
+- [x] T014 [P] Buat `lib/data/models/location_sample.dart`: `latitude`, `longitude`, `accuracy`, `speed?`, `timestamp`, plus getter `isReliable` (accuracy ≤100 m dan umur ≤30 s)
+- [x] T015 [P] Buat `lib/data/models/journey.dart`: seluruh field di [data-model.md](./data-model.md) §3 termasuk `alertThresholdMeters`, `alertTriggeredCount`, `firstAlertTriggeredAt`, `finalResolution`
+- [x] T016 [P] Buat `lib/data/models/alert_event.dart`: `id`, `journeyId`, `triggeredAt`, `distanceMeters`, `accuracyMeters`, `isRepeat`, `userAction?`, `actionTimestamp?`
+- [x] T017 [P] Buat `lib/data/models/user_settings.dart` dengan default `alertDistanceMeters: 1500`, `enableVibration: true`, `repeatIntervalMinutes: 3`, `maxRepeats: 3`
+- [x] T018 [P] Implementasikan haversine dan filter sampel di `lib/core/distance.dart` (meter, akurasi, umur sampel) agar tidak bergantung pada plugin geolocator di unit test
+- [x] T019 [P] Buat `lib/data/local/app_database.dart`: sqflite schema v1 untuk tabel `journeys` dan `alert_events` sesuai [data-model.md](./data-model.md), plus `onCreate`/`onUpgrade`
+- [x] T020 [P] Buat `lib/data/local/station_asset_loader.dart` untuk membaca `assets/data/krl_stations.json` dan mem-parse ke `Station`/`Line`
+- [x] T021 Buat `lib/data/repositories/station_repository.dart`: load aset sekali, validasi silang `lineIds`/`stationIds`/keunikan id, sediakan pencarian nama tanpa jaringan
+- [x] T022 [P] Buat `test/unit/station_repository_test.dart`: dataset lolos schema, tidak ada referensi jalur/stasiun yatim, id unik, urutan jalur konsisten
+- [x] T023 [P] Buat `lib/data/repositories/settings_repository.dart` (shared_preferences) dengan round-trip semua field `UserSettings`
+- [x] T024 Buat `lib/data/repositories/journey_repository.dart`: simpan `ActiveJourneyState` ke shared_preferences, tulis `Journey`/`AlertEvent` ke sqflite, query riwayat, hapus riwayat
+- [x] T025 [P] Buat `lib/providers/providers.dart` yang mendaftarkan provider repository, settings, station list, dan database
+- [x] T026 [P] Buat `lib/app.dart` dan `lib/main.dart`: `ProviderScope`, MaterialApp, rute awal ke `HomeScreen`
+- [x] T027 Buat `lib/services/permission_service.dart`: cek `Geolocator.isLocationServiceEnabled`, status izin, `openAppSettings`, `openLocationSettings`, dan hasil terstruktur untuk UI (FR-011)
+- [x] T028 Buat `lib/services/notification_service.dart`: inisialisasi channel `station_approach` (importance max, vibration `[0,500,200,500,200,800]`, sound null) dan `journey_status`, iOS category `STATION_APPROACH` dengan dua action, serta parser payload JSON sesuai [contracts/notifications.md](./contracts/notifications.md)
+- [x] T029 Implementasikan bootstrap pemulihan `ActiveJourneyState` saat app start di `lib/main.dart` dan provider `activeJourneyProvider` (fondasi FR-013)
+- [x] T030 [P] Buat `test/unit/settings_repository_test.dart` dan `test/unit/journey_repository_test.dart` untuk round-trip storage dan query riwayat
 
 **Checkpoint**: Foundation siap — model, storage, notifikasi, dan izin tersedia untuk semua story.
 
@@ -80,24 +80,24 @@ Flutter single-app: `lib/`, `test/`, `integration_test/`, `assets/`, `android/`,
 
 > **NOTE: Tulis test lebih dulu dan pastikan FAIL sebelum implementasi.**
 
-- [ ] T031 [P] [US1] Tulis 10 test vector TV-01..TV-10 dari [contracts/alert-engine.md](./contracts/alert-engine.md) di `test/unit/journey_engine_test.dart`
-- [ ] T032 [P] [US1] Tulis test `lib/core/distance.dart` (haversine vs nilai acuan, filter akurasi >100 m, sampel usang) di `test/unit/distance_test.dart`
-- [ ] T033 [P] [US1] Tulis test pemetaan payload notifikasi dan penanganan aksi `saya_sudah_turun`/`saya_masih_di_kereta` di `test/unit/notification_service_test.dart`
-- [ ] T034 [P] [US1] Tulis widget test alur mulai → peringatan → konfirmasi turun di `test/widget/active_journey_test.dart`
+- [x] T031 [P] [US1] Tulis 10 test vector TV-01..TV-10 dari [contracts/alert-engine.md](./contracts/alert-engine.md) di `test/unit/journey_engine_test.dart`
+- [x] T032 [P] [US1] Tulis test `lib/core/distance.dart` (haversine vs nilai acuan, filter akurasi >100 m, sampel usang) di `test/unit/distance_test.dart`
+- [x] T033 [P] [US1] Tulis test pemetaan payload notifikasi dan penanganan aksi `saya_sudah_turun`/`saya_masih_di_kereta` di `test/unit/notification_service_test.dart`
+- [x] T034 [P] [US1] Tulis widget test alur mulai → peringatan → konfirmasi turun di `test/widget/active_journey_test.dart`
 
 ### Implementation for User Story 1
 
-- [ ] T035 [US1] Implementasikan `AlertDecision`, `EngineState`, dan `JourneyEngine.evaluate` aturan R1–R9 + konstanta di `lib/services/journey_engine.dart` (tanpa plugin, tanpa jam sistem langsung)
-- [ ] T036 [US1] Implementasikan `lib/services/location_service.dart` dengan `AndroidSettings(foregroundNotificationConfig: ...)` dan `AppleSettings(pauseLocationUpdatesAutomatically: false, showBackgroundLocationIndicator: true, distanceFilter: 100, accuracy: high)`
-- [ ] T037 [US1] Buat `lib/features/destination_picker/destination_picker_screen.dart`: pencarian offline dari `StationRepository`, tampilkan nama + jalur, tolak stasiun yang sama dengan posisi awal (FR-014)
-- [ ] T038 [US1] Buat `lib/features/home/home_screen.dart`: tombol utama "Mulai Perjalanan", gate izin via `permission_service.dart`, dan daftar perjalanan aktif
-- [ ] T039 [US1] Buat `lib/features/active_journey/active_journey_screen.dart`: nama stasiun tujuan, jarak terkini, tombol "Saya Sudah Turun" dan "Hentikan Perjalanan"
-- [ ] T040 [US1] Implementasikan `JourneyController` (riverpod `Notifier`) di `lib/features/active_journey/journey_controller.dart`: mulai perjalanan, konsumsi stream lokasi, panggil engine, perbarui state
-- [ ] T041 [US1] Implementasikan pengiriman alert write-before-notify di `lib/features/active_journey/journey_controller.dart`: simpan `AlertEvent` → kirim notifikasi dengan id stabil `destinationStationId.hashCode & 0x7fffffff`
-- [ ] T042 [US1] Hubungkan aksi notifikasi ke penyelesaian perjalanan di `lib/services/notification_service.dart` dan `lib/features/active_journey/journey_controller.dart` (status `completed`, `finalResolution`, hentikan stream, hapus active journey)
-- [ ] T043 [US1] Implementasikan pengulangan peringatan (`repeatIntervalMinutes`, `maxRepeats`, cooldown 30 s) sesuai R7 di `lib/services/journey_engine.dart` dan `lib/features/active_journey/journey_controller.dart`
-- [ ] T044 [US1] Tangani kasus `alreadyArrived` (R4) di `lib/features/home/home_screen.dart` dengan tawaran konfirmasi tanpa spam alert
-- [ ] T045 [US1] Tulis integration test alur penuh dengan fake stream di `integration_test/journey_flow_test.dart`
+- [x] T035 [US1] Implementasikan `AlertDecision`, `EngineState`, dan `JourneyEngine.evaluate` aturan R1–R9 + konstanta di `lib/services/journey_engine.dart` (tanpa plugin, tanpa jam sistem langsung)
+- [x] T036 [US1] Implementasikan `lib/services/location_service.dart` dengan `AndroidSettings(foregroundNotificationConfig: ...)` dan `AppleSettings(pauseLocationUpdatesAutomatically: false, showBackgroundLocationIndicator: true, distanceFilter: 100, accuracy: high)`
+- [x] T037 [US1] Buat `lib/features/destination_picker/destination_picker_screen.dart`: pencarian offline dari `StationRepository`, tampilkan nama + jalur, tolak stasiun yang sama dengan posisi awal (FR-014)
+- [x] T038 [US1] Buat `lib/features/home/home_screen.dart`: tombol utama "Mulai Perjalanan", gate izin via `permission_service.dart`, dan daftar perjalanan aktif
+- [x] T039 [US1] Buat `lib/features/active_journey/active_journey_screen.dart`: nama stasiun tujuan, jarak terkini, tombol "Saya Sudah Turun" dan "Hentikan Perjalanan"
+- [x] T040 [US1] Implementasikan `JourneyController` (riverpod `Notifier`) di `lib/features/active_journey/journey_controller.dart`: mulai perjalanan, konsumsi stream lokasi, panggil engine, perbarui state
+- [x] T041 [US1] Implementasikan pengiriman alert write-before-notify di `lib/features/active_journey/journey_controller.dart`: simpan `AlertEvent` → kirim notifikasi dengan id stabil `destinationStationId.hashCode & 0x7fffffff`
+- [x] T042 [US1] Hubungkan aksi notifikasi ke penyelesaian perjalanan di `lib/services/notification_service.dart` dan `lib/features/active_journey/journey_controller.dart` (status `completed`, `finalResolution`, hentikan stream, hapus active journey)
+- [x] T043 [US1] Implementasikan pengulangan peringatan (`repeatIntervalMinutes`, `maxRepeats`, cooldown 30 s) sesuai R7 di `lib/services/journey_engine.dart` dan `lib/features/active_journey/journey_controller.dart`
+- [x] T044 [US1] Tangani kasus `alreadyArrived` (R4) di `lib/features/home/home_screen.dart` dengan tawaran konfirmasi tanpa spam alert
+- [x] T045 [US1] Tulis integration test alur penuh dengan fake stream di `integration_test/journey_flow_test.dart`
 
 **Checkpoint**: US1 berfungsi penuh dan independen — ini MVP yang bisa didemokan.
 
@@ -109,15 +109,15 @@ Flutter single-app: `lib/`, `test/`, `integration_test/`, `assets/`, `android/`,
 
 **Independent Test**: Buka layar perjalanan dengan fake stream yang berhenti mengirim sampel dan pastikan status berubah ke `waiting_for_signal`; force-stop dan buka ulang app lalu pastikan perjalanan aktif kembali.
 
-- [ ] T046 [P] [US2] Tulis widget test status pemantauan (`active`, `waiting_for_signal`, `permission_lost`) di `test/widget/monitoring_status_test.dart`
-- [ ] T047 [P] [US2] Tulis test pemulihan state setelah restart di `test/unit/journey_restore_test.dart`
-- [ ] T048 [US2] Buat `lib/features/active_journey/monitoring_status_widget.dart` yang menampilkan indikator status, jarak, dan alasan bila tidak aktif
-- [ ] T049 [US2] Implementasikan deteksi `waiting_for_signal` (tidak ada sampel valid >30 s atau akurasi >100 m) di `lib/features/active_journey/journey_controller.dart`
-- [ ] T050 [US2] Implementasikan `lib/providers/journey_providers.dart` agar jarak dan status diperbarui reaktif dari stream lokasi
-- [ ] T051 [US2] Tangani `Geolocator.getServiceStatusStream` dan kehilangan izin saat perjalanan aktif di `lib/services/location_service.dart` dan `lib/features/active_journey/journey_controller.dart`
-- [ ] T052 [US2] Tampilkan banner saran "Periksa arah perjalanan" saat engine mengembalikan `routeMismatch` (R8) di `lib/features/active_journey/active_journey_screen.dart`
-- [ ] T053 [US2] Kirim notifikasi `journey_status` saat GPS terputus tanpa getar di `lib/services/notification_service.dart`
-- [ ] T054 [US2] Implementasikan pemulihan penuh perjalanan aktif setelah app/perangkat restart di `lib/main.dart` menggunakan `journey_repository.dart`
+- [x] T046 [P] [US2] Tulis widget test status pemantauan (`active`, `waiting_for_signal`, `permission_lost`) di `test/widget/monitoring_status_test.dart`
+- [x] T047 [P] [US2] Tulis test pemulihan state setelah restart di `test/unit/journey_restore_test.dart`
+- [x] T048 [US2] Buat `lib/features/active_journey/monitoring_status_widget.dart` yang menampilkan indikator status, jarak, dan alasan bila tidak aktif
+- [x] T049 [US2] Implementasikan deteksi `waiting_for_signal` (tidak ada sampel valid >30 s atau akurasi >100 m) di `lib/features/active_journey/journey_controller.dart`
+- [x] T050 [US2] Implementasikan `lib/providers/journey_providers.dart` agar jarak dan status diperbarui reaktif dari stream lokasi
+- [x] T051 [US2] Tangani `Geolocator.getServiceStatusStream` dan kehilangan izin saat perjalanan aktif di `lib/services/location_service.dart` dan `lib/features/active_journey/journey_controller.dart`
+- [x] T052 [US2] Tampilkan banner saran "Periksa arah perjalanan" saat engine mengembalikan `routeMismatch` (R8) di `lib/features/active_journey/active_journey_screen.dart`
+- [x] T053 [US2] Kirim notifikasi `journey_status` saat GPS terputus tanpa getar di `lib/services/notification_service.dart`
+- [x] T054 [US2] Implementasikan pemulihan penuh perjalanan aktif setelah app/perangkat restart di `lib/main.dart` menggunakan `journey_repository.dart`
 
 **Checkpoint**: US1 dan US2 berfungsi independen.
 
@@ -129,13 +129,13 @@ Flutter single-app: `lib/`, `test/`, `integration_test/`, `assets/`, `android/`,
 
 **Independent Test**: Ubah ambang ke 1000 m, jalankan perjalanan simulasi, pastikan alert dipicu di 1 km; buka riwayat dan pastikan entri tercatat lalu bisa dihapus.
 
-- [ ] T055 [P] [US3] Tulis widget test pengaturan (pilihan 1000/1500/2000 m, toggle getaran, interval) di `test/widget/settings_screen_test.dart`
-- [ ] T056 [P] [US3] Tulis widget test riwayat (daftar, detail, hapus semua) di `test/widget/history_screen_test.dart`
-- [ ] T057 [P] [US3] Tulis test persistensi preferensi dan pengaruhnya ke `JourneyEngine` di `test/unit/settings_effect_test.dart`
-- [ ] T058 [US3] Buat `lib/features/settings/settings_screen.dart` dengan pilihan ambang 1000/1500/2000 m, toggle getaran, dan `repeatIntervalMinutes`
-- [ ] T059 [US3] Buat `lib/features/history/history_screen.dart`: daftar perjalanan (tujuan, tanggal, status) dan layar detail alert
-- [ ] T060 [US3] Terapkan `UserSettings` ke engine dan `NotificationDetails.enableVibration` di `lib/features/active_journey/journey_controller.dart` dan `lib/services/notification_service.dart`
-- [ ] T061 [US3] Tambahkan aksi hapus seluruh riwayat di `lib/features/history/history_screen.dart` via `journey_repository.dart`
+- [x] T055 [P] [US3] Tulis widget test pengaturan (pilihan 1000/1500/2000 m, toggle getaran, interval) di `test/widget/settings_screen_test.dart`
+- [x] T056 [P] [US3] Tulis widget test riwayat (daftar, detail, hapus semua) di `test/widget/history_screen_test.dart`
+- [x] T057 [P] [US3] Tulis test persistensi preferensi dan pengaruhnya ke `JourneyEngine` di `test/unit/settings_effect_test.dart`
+- [x] T058 [US3] Buat `lib/features/settings/settings_screen.dart` dengan pilihan ambang 1000/1500/2000 m, toggle getaran, dan `repeatIntervalMinutes`
+- [x] T059 [US3] Buat `lib/features/history/history_screen.dart`: daftar perjalanan (tujuan, tanggal, status) dan layar detail alert
+- [x] T060 [US3] Terapkan `UserSettings` ke engine dan `NotificationDetails.enableVibration` di `lib/features/active_journey/journey_controller.dart` dan `lib/services/notification_service.dart`
+- [x] T061 [US3] Tambahkan aksi hapus seluruh riwayat di `lib/features/history/history_screen.dart` via `journey_repository.dart`
 
 **Checkpoint**: Semua user story berfungsi independen.
 
@@ -145,14 +145,14 @@ Flutter single-app: `lib/`, `test/`, `integration_test/`, `assets/`, `android/`,
 
 **Purpose**: Perbaikan lintas cerita dan validasi rilis.
 
-- [ ] T062 [P] Tulis `README.md` berisi cara build/run, struktur proyek, dan ringkasan fitur
-- [ ] T063 [P] Tulis `docs/privacy-policy.md`: lokasi diproses di perangkat, tidak ada telemetri, riwayat dapat dihapus
-- [ ] T064 [P] Tulis `docs/play-console-foreground-service.md` berisi justifikasi foreground service type `location` untuk deklarasi Play Console
-- [ ] T065 Optimalkan konsumsi baterai di `lib/services/location_service.dart` (adaptive distanceFilter saat kecepatan rendah, hentikan stream saat perjalanan selesai) dan ukur dengan profiler
-- [ ] T066 Jalankan `flutter analyze` dan perbaiki seluruh error/warning di seluruh `lib/`, `test/`, `integration_test/`
-- [ ] T067 Jalankan `flutter test` dan `flutter test integration_test` sampai 100% lulus
-- [ ] T068 Validasi skenario V1–V10 dari [quickstart.md](./quickstart.md) di emulator Android dan catat hasilnya di `docs/validation-results.md`
-- [ ] T069 Verifikasi kepatuhan Constitution v1.0.0 (Prinsip I–V) dan perbarui Complexity Tracking di [plan.md](./plan.md) bila ada penyimpangan
+- [x] T062 [P] Tulis `README.md` berisi cara build/run, struktur proyek, dan ringkasan fitur
+- [x] T063 [P] Tulis `docs/privacy-policy.md`: lokasi diproses di perangkat, tidak ada telemetri, riwayat dapat dihapus
+- [x] T064 [P] Tulis `docs/play-console-foreground-service.md` berisi justifikasi foreground service type `location` untuk deklarasi Play Console
+- [x] T065 Optimalkan konsumsi baterai di `lib/services/location_service.dart` (adaptive distanceFilter saat kecepatan rendah, hentikan stream saat perjalanan selesai) dan ukur dengan profiler
+- [x] T066 Jalankan `flutter analyze` dan perbaiki seluruh error/warning di seluruh `lib/`, `test/`, `integration_test/`
+- [x] T067 Jalankan `flutter test` dan `flutter test integration_test` sampai 100% lulus
+- [x] T068 Validasi skenario V1–V10 dari [quickstart.md](./quickstart.md) di emulator Android dan catat hasilnya di `docs/validation-results.md`
+- [x] T069 Verifikasi kepatuhan Constitution v1.0.0 (Prinsip I–V) dan perbarui Complexity Tracking di [plan.md](./plan.md) bila ada penyimpangan
 
 ---
 

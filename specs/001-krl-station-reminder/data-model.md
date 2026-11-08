@@ -24,7 +24,7 @@ Mewakili titik stasiun KRL.
 | `orderIndex` | int | Yes | Urutan default pada jalur utama untuk pengurutan pencarian. |
 
 **Validation Rules**:
-- `latitude` dan `longitude` harus berada di dalam batas geografis Jabodetabek dan sekitarnya (Lat: -7.0 s/d -5.8, Lon: 106.3 s/d 107.4).
+- `latitude` dan `longitude` harus berada di dalam batas geografis layanan KRL Jabodetabek (Lat: -7.0 s/d -5.8, Lon: 106.1 s/d 107.4, mencakup terminus Rangkasbitung).
 - `id` unik dan alfanumerik panjang 2-5 karakter.
 
 ---
