@@ -25,6 +25,7 @@ concurrency:
 
 permissions:
   contents: read
+  issues: write
 
 jobs:
   build-unsigned-ipa:
@@ -75,13 +76,24 @@ jobs:
 
       - name: Dump build error on failure
         if: failure()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           {
-            echo "### Flutter iOS build failed"
+            echo "### Flutter iOS build failed (run $GITHUB_RUN_NUMBER)"
+            echo ""
+            echo "Commit: \`$GITHUB_SHA\`"
+            echo ""
             echo '```'
             tail -n 200 /tmp/flutter_build_ios.log || true
             echo '```'
-          } >> "$GITHUB_STEP_SUMMARY"
+          } > /tmp/build_error.md
+          cat /tmp/build_error.md >> "$GITHUB_STEP_SUMMARY"
+          gh issue create \
+            --repo "$GITHUB_REPOSITORY" \
+            --title "CI: build iOS gagal (run $GITHUB_RUN_NUMBER)" \
+            --body-file /tmp/build_error.md \
+            || echo "gagal membuat issue"
 
       - name: Package IPA
         id: package
